@@ -1,0 +1,480 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+  :root {
+    --ygo-gold: #C9A84C;
+    --ygo-gold-light: #E8D080;
+    --ygo-gold-dark: #8B6914;
+    --ygo-blue: #1a2a5e;
+    --ygo-blue2: #0d1b4b;
+    --ygo-red: #8B1A1A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body, .wrap {
+    background: transparent;
+    color: #e8dfc8;
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 0 3rem; }
+
+  .header {
+    text-align: center;
+    padding: 2.5rem 1rem 2rem;
+    position: relative;
+    border-bottom: 2px solid var(--ygo-gold-dark);
+    margin-bottom: 2rem;
+    background: linear-gradient(180deg, #0a0a1e 0%, #10101e 100%);
+    border-radius: 0 0 12px 12px;
+  }
+
+  .header::before, .header::after { content: '✦'; position: absolute; top: 50%; transform: translateY(-50%); color: var(--ygo-gold); font-size: 1.5rem; }
+  .header::before { left: 1.5rem; }
+  .header::after { right: 1.5rem; }
+
+  .header-eyebrow { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--ygo-gold-dark); text-transform: uppercase; margin-bottom: 0.5rem; }
+  h1 { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.3rem, 4vw, 2rem); font-weight: 900; color: var(--ygo-gold); text-shadow: 0 0 30px rgba(201,168,76,0.4); line-height: 1.2; margin-bottom: 0.4rem; }
+  .header-sub { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--ygo-gold-dark); }
+  .ornament { color: var(--ygo-gold); font-size: 1.2rem; margin: 0.5rem 0; letter-spacing: 0.5rem; }
+
+  .section { margin: 0 1rem 2rem; border: 1px solid var(--ygo-gold-dark); border-radius: 8px; overflow: hidden; background: linear-gradient(135deg, #0d0d20 0%, #101028 100%); }
+  .section-premio { border-color: var(--ygo-gold); box-shadow: 0 0 18px rgba(201,168,76,0.15); }
+
+  .section-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.25rem; background: linear-gradient(90deg, var(--ygo-blue2) 0%, var(--ygo-blue) 60%, transparent 100%); border-bottom: 1px solid var(--ygo-gold-dark); cursor: pointer; user-select: none; }
+  .section-header:hover { background: linear-gradient(90deg, #1a2a6e 0%, #1e3060 60%, transparent 100%); }
+  .section-header-premio { background: linear-gradient(90deg, #2a1f00 0%, #3d2e00 60%, transparent 100%); border-bottom: 1px solid var(--ygo-gold); }
+  .section-header-premio:hover { background: linear-gradient(90deg, #3a2c00 0%, #4d3a00 60%, transparent 100%); }
+  .section-header-premio .section-title { color: var(--ygo-gold-light); }
+
+  .section-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .section-title { font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.1em; color: var(--ygo-gold); flex: 1; }
+  .section-chevron { color: var(--ygo-gold-dark); font-size: 0.8rem; transition: transform 0.25s; font-family: monospace; }
+  .section-chevron.open { transform: rotate(180deg); }
+  .section-body { padding: 1.25rem 1.5rem; display: none; }
+  .section-body.open { display: block; }
+
+  .rule { display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid rgba(201,168,76,0.12); align-items: flex-start; }
+  .rule:last-child { border-bottom: none; }
+  .rule-num { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--ygo-gold-dark); background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); border-radius: 4px; min-width: 28px; height: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 3px; }
+  .rule-text { font-size: 0.95rem; color: #d8cfb4; line-height: 1.65; }
+  .rule-label { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; color: var(--ygo-gold); display: block; margin-bottom: 0.2rem; letter-spacing: 0.05em; }
+  .highlight { color: var(--ygo-gold-light); font-weight: 500; }
+
+  .banned-list { margin: 0.4rem 0 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.2rem 1rem; }
+  .banned-list li { font-size: 0.85rem; color: #b8a898; padding-left: 1rem; position: relative; }
+  .banned-list li::before { content: '◆'; position: absolute; left: 0; color: var(--ygo-gold-dark); font-size: 0.5rem; top: 0.45rem; }
+
+  .format-table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; font-size: 0.88rem; }
+  .format-table th { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.08em; color: var(--ygo-gold-dark); text-align: left; padding: 0.4rem 0.75rem; border-bottom: 1px solid rgba(201,168,76,0.2); }
+  .format-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(201,168,76,0.08); vertical-align: top; color: #d8cfb4; }
+  .format-table tr:last-child td { border-bottom: none; }
+  .format-table td:first-child { font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--ygo-gold-light); white-space: nowrap; background: rgba(201,168,76,0.05); border-radius: 4px; letter-spacing: 0.05em; }
+  .format-example { display: block; margin-top: 0.2rem; font-style: italic; color: #a09080; font-size: 0.83rem; }
+
+  .link-btn { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.4rem; padding: 0.3rem 0.85rem; background: rgba(74,144,217,0.12); border: 1px solid rgba(74,144,217,0.35); border-radius: 4px; color: #7ab8e8; font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.08em; text-decoration: none; }
+  .link-btn:hover { background: rgba(74,144,217,0.22); color: #a8d0f4; }
+
+  .warn-steps { display: flex; gap: 1rem; margin-top: 0.75rem; flex-wrap: wrap; }
+  .warn-step { flex: 1; min-width: 140px; background: rgba(139,26,26,0.12); border: 1px solid rgba(201,168,76,0.15); border-radius: 6px; padding: 0.6rem 0.85rem; text-align: center; }
+  .warn-step-num { font-family: 'Cinzel Decorative', serif; font-size: 1.6rem; color: var(--ygo-gold); line-height: 1; margin-bottom: 0.2rem; }
+  .warn-step-label { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ygo-gold-dark); margin-bottom: 0.3rem; }
+  .warn-step-desc { font-size: 0.8rem; color: #a09080; line-height: 1.4; }
+
+  .prize-badge { display: inline-block; margin-top: 0.3rem; padding: 0.2rem 0.6rem; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); border-radius: 4px; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--ygo-gold-dark); }
+
+  .travel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.75rem; }
+  .travel-card { background: rgba(13,27,75,0.4); border: 1px solid rgba(201,168,76,0.2); border-radius: 6px; padding: 0.75rem 1rem; }
+  .travel-card-title { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.08em; color: var(--ygo-gold); margin-bottom: 0.3rem; }
+  .travel-card-time { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: var(--ygo-gold-light); line-height: 1; margin-bottom: 0.2rem; }
+  .travel-card-desc { font-size: 0.82rem; color: #a09080; line-height: 1.4; }
+  .travel-card-example { font-size: 0.78rem; color: #7a7060; font-style: italic; margin-top: 0.2rem; }
+
+  .components-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-top: 0.75rem; }
+  .component-tag { background: rgba(13,27,75,0.4); border: 1px solid rgba(201,168,76,0.2); border-radius: 4px; padding: 0.4rem 0.6rem; font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.06em; color: var(--ygo-gold-dark); text-align: center; }
+
+  .master-box { margin-top: 0.6rem; padding: 0.85rem 1rem; background: rgba(26,42,94,0.3); border: 1px solid rgba(74,144,217,0.3); border-radius: 6px; font-size: 0.88rem; color: #c8bfa8; line-height: 1.6; }
+  .master-box-title { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.1em; color: #7ab8e8; margin-bottom: 0.4rem; display: block; }
+
+  .info-box { margin-top: 0.6rem; padding: 0.85rem 1rem; background: rgba(46,125,50,0.1); border: 1px solid rgba(46,125,50,0.3); border-radius: 6px; font-size: 0.88rem; color: #c8bfa8; line-height: 1.6; }
+  .info-box-title { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.1em; color: #81c784; margin-bottom: 0.4rem; display: block; }
+
+  .premio-card { border: 1px solid rgba(201,168,76,0.25); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
+  .premio-card:last-child { margin-bottom: 0; }
+  .premio-card-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 1rem; background: linear-gradient(90deg, rgba(42,31,0,0.8) 0%, rgba(30,20,0,0.6) 100%); border-bottom: 1px solid rgba(201,168,76,0.2); }
+  .premio-card-icon { font-size: 1.2rem; }
+  .premio-card-title { font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; color: var(--ygo-gold-light); }
+  .premio-card-body { padding: 0.85rem 1rem; background: rgba(0,0,0,0.25); font-size: 0.9rem; color: #c8bfa8; line-height: 1.65; }
+  .premio-mystery { background: rgba(61,26,110,0.2); border-color: rgba(150,80,220,0.3); }
+  .premio-mystery .premio-card-header { background: linear-gradient(90deg, rgba(40,10,70,0.8) 0%, rgba(25,5,50,0.6) 100%); border-bottom-color: rgba(150,80,220,0.3); }
+  .premio-mystery .premio-card-title { color: #ce9af5; }
+
+  .crime-tier { border-radius: 6px; margin-bottom: 1.25rem; overflow: hidden; border: 1px solid rgba(201,168,76,0.15); }
+  .crime-tier:last-child { margin-bottom: 0; }
+  .crime-tier-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; }
+  .tier-lieve .crime-tier-header { background: rgba(46,125,50,0.2); color: #81c784; border-bottom: 1px solid rgba(46,125,50,0.3); }
+  .tier-medio .crime-tier-header { background: rgba(245,124,0,0.2); color: #ffb74d; border-bottom: 1px solid rgba(245,124,0,0.3); }
+  .tier-grave .crime-tier-header { background: rgba(139,26,26,0.3); color: #ef9a9a; border-bottom: 1px solid rgba(139,26,26,0.4); }
+  .crime-tier-body { padding: 0.75rem 1rem; background: rgba(0,0,0,0.2); }
+  .crime-pena { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.06em; margin-bottom: 0.5rem; padding: 0.3rem 0.6rem; border-radius: 4px; display: inline-block; }
+  .tier-lieve .crime-pena { background: rgba(46,125,50,0.15); color: #a5d6a7; }
+  .tier-medio .crime-pena { background: rgba(245,124,0,0.15); color: #ffcc80; }
+  .tier-grave .crime-pena { background: rgba(139,26,26,0.2); color: #ef9a9a; }
+  .crime-list { list-style: none; padding: 0; margin: 0.4rem 0 0 0; display: flex; flex-direction: column; gap: 0.2rem; }
+  .crime-list li { font-size: 0.88rem; color: #c8bfa8; padding-left: 1.1rem; position: relative; line-height: 1.5; }
+  .crime-list li::before { content: '◆'; position: absolute; left: 0; font-size: 0.45rem; top: 0.5rem; color: var(--ygo-gold-dark); }
+
+  .exile-box { margin-top: 0.75rem; padding: 0.85rem 1rem; background: rgba(139,26,26,0.12); border: 1px solid rgba(139,26,26,0.35); border-radius: 6px; font-size: 0.88rem; color: #c8bfa8; line-height: 1.6; }
+  .exile-box-title { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.1em; color: #ef9a9a; margin-bottom: 0.4rem; display: block; }
+
+  .footer { text-align: center; padding: 1.5rem 1rem 0.5rem; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--ygo-gold-dark); }
+</style>
+
+<div class="wrap">
+  <div class="header">
+    <div class="header-eyebrow">Server Ufficiale</div>
+    <div class="ornament">✦ ◆ ✦</div>
+    <h1>Regolamento GdR</h1>
+    <div style="font-family:'Cinzel Decorative',serif; font-size:0.75rem; color:var(--ygo-gold-dark); margin-top:0.3rem;">Yu-Gi-Oh!</div>
+    <div class="ornament" style="margin-top:0.5rem;">✦ ◆ ✦</div>
+    <div class="header-sub">Leggi con attenzione — il destino del tuo duellante dipende da te</div>
+  </div>
+
+  <!-- I -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-icon">👤</span>
+      <span class="section-title">I — Creazione del Personaggio</span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="rule"><div class="rule-num">1</div><div class="rule-text"><span class="rule-label">Origine</span>Bisogna scegliere l'origine del proprio personaggio e rispettarne le conseguenze narrative. <em style="color:#a09080;">Esempio: un personaggio del Satellite dovrà seguire le regole e le restrizioni proprie dei cittadini del Satellite.</em></div></div>
+      <div class="rule"><div class="rule-num">2</div><div class="rule-text"><span class="rule-label">Età minima</span>I personaggi devono avere un'età minima di <span class="highlight">sedici anni</span> al momento della creazione.</div></div>
+      <div class="rule"><div class="rule-num">3</div><div class="rule-text"><span class="rule-label">Personaggi umani</span>È obbligatorio creare personaggi umani appartenenti al mondo di gioco. Sono vietati personaggi non umani, provenienti da altri universi, dimensioni o piani di esistenza alternativi.</div></div>
+      <div class="rule"><div class="rule-num">4</div><div class="rule-text"><span class="rule-label">Poteri psichici e Regno degli Spiriti</span>È vietato creare personaggi dotati di poteri psichici o in grado di accedere al Regno degli Spiriti. Queste abilità sono <span class="highlight">premi esclusivi</span> riservati ai giocatori che si dimostreranno meritevoli attraverso il proprio comportamento e la qualità del proprio gioco. Saranno assegnati dallo staff a sua discrezione.<br><span class="prize-badge">✦ Premio esclusivo dello staff</span></div></div>
+      <div class="rule"><div class="rule-num">5</div><div class="rule-text"><span class="rule-label">Background obbligatorio</span>Ogni personaggio deve avere un background scritto (storia, motivazioni, personalità) da sottoporre allo staff per approvazione insieme al mazzo, per garantire coerenza narrativa fin dall'inizio.</div></div>
+      <div class="rule"><div class="rule-num">6</div><div class="rule-text"><span class="rule-label">Duel Runner</span>Le Duel Runner sono un <span class="highlight">premio esclusivo</span>: è impossibile possederle come elemento di background. I personaggi provenienti dal Satellite non potranno averne una legalmente.</div></div>
+    </div>
+  </div>
+
+  <!-- II -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-icon">🃏</span>
+      <span class="section-title">II — Regole sul Mazzo</span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="rule"><div class="rule-num">7</div><div class="rule-text"><span class="rule-label">Formato</span>I mazzi devono essere costruiti seguendo il <span class="highlight">formato 2017</span>. Le carte Pendulum sono bandite.</div></div>
+      <div class="rule"><div class="rule-num">8</div><div class="rule-text"><span class="rule-label">Dimensioni del mazzo</span>Il Main Deck deve contenere da un minimo di <span class="highlight">40</span> a un massimo di <span class="highlight">60 carte</span>. L'Extra Deck può contenere al massimo <span class="highlight">15 carte</span>. Il Side Deck può contenere al massimo <span class="highlight">15 carte</span>.</div></div>
+      <div class="rule"><div class="rule-num">9</div><div class="rule-text"><span class="rule-label">Carte bandite per motivi di trama</span>Sono temporaneamente bandite le seguenti carte:<ul class="banned-list"><li>Mostri Numero</li><li>Divinità Egizie</li><li>Carte Exodia</li><li>Drago Polvere di Stelle</li><li>Arcidemone Drago Rosso</li><li>Drago Rosa Nera</li><li>Antico Drago Fatato</li><li>Drago Ali Nere</li><li>Mostri dei Predestinati Oscuri</li></ul></div></div>
+      <div class="rule"><div class="rule-num">10</div><div class="rule-text"><span class="rule-label">Approvazione del mazzo</span>Il mazzo deve essere approvato dallo staff tramite apposito ticket prima di poter essere utilizzato in gioco.</div></div>
+      <div class="rule"><div class="rule-num">11</div><div class="rule-text"><span class="rule-label">Modifica del mazzo</span>Una volta approvato, il mazzo potrà essere modificato <span class="highlight">esclusivamente tramite gameplay</span>: acquistando carte nei mercati appositi oppure ottenendole tramite eventi o missioni.</div></div>
+      <div class="rule"><div class="rule-num">12</div><div class="rule-text"><span class="rule-label">Acquisto di carte e prodotti</span>Carte e altri prodotti commerciali in-game sono ottenibili solo tramite i mercati appositi, missioni o eventi. Potrà essere imposto un limite al numero di carte acquistabili per settimana.</div></div>
+    </div>
+  </div>
+
+  <!-- III -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-icon">⚔️</span>
+      <span class="section-title">III — Regole sui Duelli</span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="rule"><div class="rule-num">13</div><div class="rule-text"><span class="rule-label">Simulatore ufficiale</span>Per duellare si utilizzerà il simulatore ufficiale del server:<br><a class="link-btn" href="https://www.duelingbook.com/html5" target="_blank">▶ Duelingbook</a></div></div>
+      <div class="rule"><div class="rule-num">14</div><div class="rule-text"><span class="rule-label">Life Points</span>Nei duelli normali i Life Points di partenza saranno <span class="highlight">4.000</span>; nei tornei saranno <span class="highlight">8.000</span>.</div></div>
+      <div class="rule"><div class="rule-num">15</div><div class="rule-text"><span class="rule-label">Registrazione dei duelli</span>Il risultato di ogni duello ufficiale deve essere documentato (screenshot o log) e inviato allo staff tramite apposito canale o ticket.</div></div>
+      <div class="rule">
+        <div class="rule-num">16</div>
+        <div class="rule-text">
+          <span class="rule-label">Abbandono del duello e Resa</span>
+          È vietato abbandonare un duello senza una motivazione valida. Sono tuttavia previste le seguenti eccezioni:
+          <div class="info-box">
+            <span class="info-box-title">🏳 Resa in-game</span>
+            Un giocatore può dichiarare resa durante un duello per motivazioni narrative legate al proprio personaggio. La resa è un atto volontario e consapevole che produce effetti in-game: l'esito viene considerato a tutti gli effetti una sconfitta con le relative conseguenze narrative.
+          </div>
+          <div class="info-box" style="margin-top:0.5rem; background: rgba(61,26,110,0.1); border-color: rgba(150,80,220,0.25);">
+            <span class="info-box-title" style="color:#ce9af5;">⏸ Interruzione per cause off-game</span>
+            Se un giocatore si trova costretto ad abbandonare il duello per complicazioni off-game giustificabili e documentabili, la situazione di gioco verrà <span class="highlight">congelata</span> nel suo stato attuale. Il duello sarà ripreso e completato alla prima occasione libera concordata tra le parti, senza penalità per nessuno dei due giocatori.
+          </div>
+        </div>
+      </div>
+      <div class="rule"><div class="rule-num">17</div><div class="rule-text"><span class="rule-label">Accordi pre-duello</span>Prima di un duello, le parti possono concordare eventuali puntate (oggetti, DP, carte) valide solo se accettate da entrambi i giocatori e comunicate allo staff.</div></div>
+    </div>
+  </div>
+
+  <!-- IV -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-icon">💰</span>
+      <span class="section-title">IV — Economia e Missioni</span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="rule"><div class="rule-num">18</div><div class="rule-text"><span class="rule-label">Valuta: i DP</span>Il gioco si basa sui <span class="highlight">DP (Duel Points)</span>, ottenibili tramite missioni. Al termine di un duello vinto, i <span class="highlight">tuoi Life Points rimanenti</span> vengono convertiti in denaro in-game. <em style="color:#a09080;">Esempio: se vinci con 1.450 LP rimasti, otterrai 1.450 DP.</em></div></div>
+      <div class="rule"><div class="rule-num">19</div><div class="rule-text"><span class="rule-label">Premi speciali</span>Lo staff potrà premiare i giocatori con prestazioni meritevoli con ricompense speciali per il proprio gameplay.</div></div>
+      <div class="rule"><div class="rule-num">20</div><div class="rule-text"><span class="rule-label">Prezzi e mercati</span>I prezzi dei mercati saranno pubblici per evitare speculazioni o squilibri economici tra giocatori.</div></div>
+    </div>
+  </div>
+
+  <!-- V -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-icon">🗺️</span>
+      <span class="section-title">V — Spostamenti e Tempi di Viaggio</span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="rule">
+        <div class="rule-num">21</div>
+        <div class="rule-text">
+          <span class="rule-label">Regola generale sugli spostamenti</span>
+          Ogni spostamento tra luoghi diversi richiede un tempo di attesa reale prima che il personaggio possa interagire nella nuova location. Non è possibile spostarsi istantaneamente: il viaggio deve essere interpretato con coerenza narrativa rispettando i tempi indicati.
+          <div class="travel-grid">
+            <div class="travel-card">
+              <div class="travel-card-title">🏙️ Spostamento interno alla città</div>
+              <div class="travel-card-time">15 min</div>
+              <div class="travel-card-desc">Spostamento tra due luoghi all'interno della stessa area urbana.</div>
+              <div class="travel-card-example">Es. dalla sede della sicurezza al municipio.</div>
+            </div>
+            <div class="travel-card">
+              <div class="travel-card-title">🌆 Spostamento tra zone diverse</div>
+              <div class="travel-card-time">30 min</div>
+              <div class="travel-card-desc">Spostamento da una zona cittadina a un'altra distinta.</div>
+              <div class="travel-card-example">Es. dal centro alla periferia nord.</div>
+            </div>
+            <div class="travel-card">
+              <div class="travel-card-title">🚢 Nave — Domino ↔ Satellite</div>
+              <div class="travel-card-time">2 ore</div>
+              <div class="travel-card-desc">Traversata via mare tra Domino City e il Satellite. Accessibile a tutti i personaggi con i documenti in regola.</div>
+              <div class="travel-card-example">Unico mezzo disponibile senza Duel Runner.</div>
+            </div>
+            <div class="travel-card">
+              <div class="travel-card-title">🏍️ Duel Runner — Tunnel</div>
+              <div class="travel-card-time">1 ora</div>
+              <div class="travel-card-desc">Percorso attraverso il tunnel sotterraneo. Riservato ai possessori di una Duel Runner.</div>
+              <div class="travel-card-example">Mezzo più rapido per il collegamento Domino–Satellite.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VI -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-icon">🎭</span>
+      <span class="section-title">VI — Regole di Roleplay</span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="rule"><div class="rule-num">22</div><div class="rule-text"><span class="rule-label">Coerenza narrativa</span>Il gioco ruota attorno alle azioni e alle scelte dei giocatori. Ogni percorso è valido, a patto che rimanga coerente con le motivazioni e la storia del proprio personaggio.</div></div>
+      <div class="rule"><div class="rule-num">23</div><div class="rule-text"><span class="rule-label">No Metagame — No Powerplay</span>È vietato utilizzare informazioni non ottenute tramite il gioco. È altresì vietato compiere azioni autoconclusive che influenzino altri giocatori senza il loro consenso.</div></div>
+      <div class="rule"><div class="rule-num">24</div><div class="rule-text"><span class="rule-label">No Godmodding</span>È vietato descrivere le azioni o le reazioni di un altro personaggio senza il consenso del giocatore che lo interpreta.</div></div>
+      <div class="rule">
+        <div class="rule-num">25</div>
+        <div class="rule-text">
+          <span class="rule-label">Master-RP — Scontri tra Giocatori</span>
+          Ogni qualvolta un giocatore intenda compiere un'azione ostile nei confronti di un altro giocatore — che si tratti di un singolo atto aggressivo o di un vero e proprio scontro che potrebbe sfociare in un duello — è obbligatorio contattare un <span class="highlight">Master-RP</span> prima di procedere. Il Master-RP seguirà l'interazione tra i due giocatori, valuterà la qualità narrativa delle azioni di entrambi e decreterà chi avrà la meglio, sia per le singole azioni che per l'esito complessivo dello scontro. La sua decisione è definitiva e va accettata senza contestazioni pubbliche.
+          <div class="master-box">
+            <span class="master-box-title">⚔️ Come funziona lo scontro con Master-RP</span>
+            Il giocatore che intende agire contro un altro apre un ticket o contatta il Master-RP disponibile. Il Master osserva le azioni di entrambe le parti in tempo reale, valutando dettaglio narrativo, coerenza con il personaggio e qualità della scrittura. Al termine di ogni azione o sequenza, decreta l'esito. Se la situazione lo richiede, lo scontro si conclude con un duello ufficiale su Duelingbook, il cui risultato determinerà l'esito narrativo finale.
+          </div>
+        </div>
+      </div>
+      <div class="rule"><div class="rule-num">26</div><div class="rule-text"><span class="rule-label">Master-RP — Imparzialità</span>Il Master-RP ha il dovere assoluto di agire con <span class="highlight">piena imparzialità</span>. È fortemente raccomandato che venga contattato un Master-RP che non abbia legami affettivi o relazioni significative in-game con nessuno dei due giocatori coinvolti, al fine di garantire una valutazione quanto più oggettiva e neutrale possibile. In caso di conflitto di interessi dichiarato o evidente, il Master-RP deve rifiutare l'incarico e indicare un sostituto disponibile.</div></div>
+      <div class="rule">
+        <div class="rule-num">27</div>
+        <div class="rule-text">
+          <span class="rule-label">Formato delle azioni</span>
+          Per garantire chiarezza e leggibilità, ogni giocatore è tenuto a rispettare il seguente formato:
+          <table class="format-table">
+            <tr><th>Simbolo</th><th>Utilizzo</th></tr>
+            <tr><td>[ ]</td><td>Tag di luogo nella chat oppure onomatopee.<span class="format-example">Es. [Centro Abitato — Posto X] &nbsp;|&nbsp; cade il piatto [CRASH] e si rompe sul pavimento</span></td></tr>
+            <tr><td>&lt; &gt;</td><td>Parlato, udibile da tutti i presenti. Specificare prima di parlare se si vuole sussurrare.<span class="format-example">Es. &lt;Salve a tutti!&gt; &nbsp;|&nbsp; sussurra a Mario &lt;Dobbiamo parlare.&gt;</span></td></tr>
+            <tr><td>" "</td><td>Pensieri del personaggio, non udibili dagli altri.<span class="format-example">Es. "Ho fame, spero ci sia qualcosa da mangiare qui."</span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="rule"><div class="rule-num">28</div><div class="rule-text"><span class="rule-label">Qualità delle azioni</span>Ogni azione deve essere descritta con un minimo di dettaglio narrativo. Sono vietate azioni telegrafiche e prive di contesto.<br><em style="color:#a09080; font-size:0.88rem;">✗ Vietato: <span style="color:#888">"Apre la porta del bar e si siede."</span><br>✓ Corretto: <span style="color:#b8a898">"Si avvicina lentamente alla porta del bar, la apre con una spinta decisa e si lascia cadere su uno degli sgabelli, lanciando uno sguardo distratto intorno alla stanza."</span></em></div></div>
+      <div class="rule"><div class="rule-num">29</div><div class="rule-text"><span class="rule-label">PNG di Background</span>I giocatori possono creare PNG di background personali da utilizzare come contorno narrativo. Sono ammessi esclusivamente in <span class="highlight">giocate neutre e prive di sviluppi importanti</span>. È vietato usarli per salvare il proprio PG in situazioni critiche, influenzare eventi rilevanti o sostituire giocatori reali in scene che li richiederebbero. L'abuso è considerato powerplay.</div></div>
+      <div class="rule"><div class="rule-num">30</div><div class="rule-text"><span class="rule-label">Separazione OOC / IC</span>I messaggi in-character (IC) devono essere distinti da quelli out-of-character (OOC) tramite appositi indicatori (es. <span class="highlight">(( ))</span> per l'OOC). Discussioni personali non devono mai influenzare il gioco.</div></div>
+      <div class="rule"><div class="rule-num">31</div><div class="rule-text"><span class="rule-label">Duel Runner — Componenti obbligatori</span>Una Duel Runner per essere funzionante deve essere composta da tutti i seguenti componenti. L'assenza anche di uno solo rende il veicolo inutilizzabile fino alla sua sostituzione o riparazione:
+        <div class="components-grid">
+          <div class="component-tag">⚙️ Telaio</div>
+          <div class="component-tag">🔧 Motore</div>
+          <div class="component-tag">💻 Sistema Operativo</div>
+          <div class="component-tag">🖥️ CPU</div>
+          <div class="component-tag">🔋 Batteria</div>
+          <div class="component-tag">💨 Sistema di Scarico</div>
+          <div class="component-tag">⚡ Sistema di Alimentazione</div>
+          <div class="component-tag">🛡️ Sistema di Sicurezza</div>
+          <div class="component-tag">❄️ Sistema di Raffreddamento</div>
+        </div>
+      </div></div>
+      <div class="rule"><div class="rule-num">32</div><div class="rule-text"><span class="rule-label">Crimini in-game</span>È possibile commettere crimini di qualsiasi tipo contro altri giocatori e PNG, a patto di accettare le dovute conseguenze qualora si venga colti in flagrante.</div></div>
+      <div class="rule"><div class="rule-num">33</div><div class="rule-text"><span class="rule-label">Morte del personaggio</span>In caso di morte, il personaggio va abbandonato definitivamente e bisogna crearne uno nuovo da zero.</div></div>
+      <div class="rule"><div class="rule-num">34</div><div class="rule-text"><span class="rule-label">Assenza prolungata</span>Un giocatore che deve assentarsi per un periodo prolungato deve avvisare lo staff, che valuterà come gestire narrativamente il personaggio durante l'assenza.</div></div>
+    </div>
+  </div>
+
+  <!-- VII -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-icon">🔱</span>
+      <span class="section-title">VII — Crimini, Arresti e Detenzione</span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="rule"><div class="rule-num">35</div><div class="rule-text"><span class="rule-label">Marchio da Criminale</span>Ogni personaggio catturato dalle forze di sicurezza riceverà il <span class="highlight">Marchio da Criminale</span>, valido sia per i cittadini di Domino City che per gli abitanti del Satellite. Il marchio segnala la posizione del personaggio alle autorità in qualunque spostamento. È <span class="highlight">permanente e non può essere rimosso</span>; tuttavia è possibile disturbare il segnale GPS con determinati metodi in-game, fino ad arrivare, in casi particolari, alla neutralizzazione completa del sistema di tracciamento. Le modalità sono lasciate all'inventiva e alle risorse del giocatore.</div></div>
+      <div class="rule"><div class="rule-num">36</div><div class="rule-text"><span class="rule-label">Custodia e Processo</span>Il personaggio catturato verrà posto in custodia e sottoposto a un <span class="highlight">processo presso la Corte Marziale</span>, che determinerà la colpevolezza e la durata della pena in proporzione alla gravità del crimine.</div></div>
+      <div class="rule"><div class="rule-num">37</div><div class="rule-text"><span class="rule-label">Esilio da Domino City</span>Il cittadino di Domino City dichiarato colpevole dalla Corte Marziale, dopo aver scontato la propria pena, subirà le seguenti conseguenze permanenti:<div class="exile-box"><span class="exile-box-title">⚖ Conseguenze post-condanna per i cittadini di Domino City</span>Tutti i beni del personaggio — ad eccezione del <span class="highlight">Duel Disk</span> e del <span class="highlight">mazzo di carte</span> — verranno confiscati e riutilizzati dalla sicurezza o messi in vendita nei mercati ufficiali. Al personaggio verrà revocata la cittadinanza di Domino City e sarà trasferito coattivamente al Satellite, dove dovrà ricominciare da zero.</div></div></div>
+      <div class="rule"><div class="rule-num">38</div><div class="rule-text"><span class="rule-label">La Struttura ed Evasione</span>Il personaggio condannato verrà trasferito nella <span class="highlight">Struttura</span>. La detenzione non costituisce un game over: il giocatore potrà tentare di fuggire sfruttando le proprie abilità e risorse narrative. Il numero di tentativi consentiti è stabilito <span class="highlight">a discrezione dello staff</span>. Se il personaggio venisse catturato un numero eccessivo di volte, le autorità disporranno il trasferimento in <span class="highlight">isolamento totale</span>, che comporta il game over — salvo che altri giocatori non intraprendano una missione per liberarlo.</div></div>
+      <div class="rule" style="flex-direction: column;">
+        <div style="display:flex; gap:1rem; align-items:flex-start;">
+          <div class="rule-num" style="margin-top:0;">39</div>
+          <div class="rule-text" style="width:100%;">
+            <span class="rule-label">Codice Penale — Lista dei Crimini</span>
+            I crimini sono classificati in tre livelli di gravità. Le pene sono orientative e modulabili dallo staff.
+            <div style="margin-top:1rem;">
+              <div class="crime-tier tier-lieve">
+                <div class="crime-tier-header">🟢 &nbsp; Crimini Lievi</div>
+                <div class="crime-tier-body">
+                  <span class="crime-pena">⚖ Pena: multa in DP e/o detenzione breve (1–3 giorni di gioco)</span>
+                  <ul class="crime-list">
+                    <li>Disturbo della quiete pubblica o rissa minore senza conseguenze gravi</li>
+                    <li>Furto di modesta entità (carte, oggetti di basso valore, borseggio)</li>
+                    <li>Duello non autorizzato in zone pubbliche o vietate</li>
+                    <li>Possesso di Duel Runner senza licenza valida</li>
+                    <li>Violazione del coprifuoco o accesso a zone riservate senza permesso</li>
+                    <li>Truffa minore o commercio irregolare di modesta entità</li>
+                    <li>Resistenza passiva a un controllo delle forze dell'ordine</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="crime-tier tier-medio">
+                <div class="crime-tier-header">🟠 &nbsp; Crimini Medi</div>
+                <div class="crime-tier-body">
+                  <span class="crime-pena">⚖ Pena: marchio da criminale + detenzione media (1–2 settimane di gioco) + processo alla Corte Marziale</span>
+                  <ul class="crime-list">
+                    <li>Aggressione con conseguenze fisiche gravi, risolta o meno tramite duello</li>
+                    <li>Duello coercitivo: costringere un altro personaggio a duellare sotto minaccia</li>
+                    <li>Furto con scasso o sottrazione violenta di carte, Duel Disk o oggetti di valore</li>
+                    <li>Ricettazione o commercio illegale di carte e oggetti rubati o contraffatti</li>
+                    <li>Corruzione di un funzionario o membro delle forze dell'ordine</li>
+                    <li>Estorsione o minacce gravi verso altri personaggi</li>
+                    <li>Sabotaggio di un evento ufficiale o di un torneo</li>
+                    <li>Evasione dalla custodia o dall'arresto</li>
+                    <li>Falsa testimonianza durante un processo alla Corte Marziale</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="crime-tier tier-grave">
+                <div class="crime-tier-header">🔴 &nbsp; Crimini Gravi</div>
+                <div class="crime-tier-body">
+                  <span class="crime-pena">⚖ Pena: marchio permanente + trasferimento alla Struttura + processo alla Corte Marziale + confisca dei beni + esilio al Satellite (per i cittadini di Domino) + rischio isolamento</span>
+                  <ul class="crime-list">
+                    <li>Omicidio o tentato omicidio di un personaggio giocante o PNG rilevante</li>
+                    <li>Rapimento o sequestro di persona</li>
+                    <li>Attentato o sabotaggio su larga scala a infrastrutture pubbliche</li>
+                    <li>Traffico organizzato di carte illegali o oggetti proibiti</li>
+                    <li>Cospirazione contro le autorità o sovversione dell'ordine pubblico</li>
+                    <li>Recidiva aggravata su crimini medi con circostanze aggravanti</li>
+                    <li>Furto o manomissione delle Duel Runner delle forze di sicurezza</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIII — PREMI STAFF -->
+  <div class="section section-premio">
+    <div class="section-header section-header-premio" onclick="toggle(this)">
+      <span class="section-icon">✨</span>
+      <span class="section-title">VIII — Premi Staff</span>
+      <span class="section-chevron open" style="color:var(--ygo-gold);">▼</span>
+    </div>
+    <div class="section-body open">
+      <p style="font-size:0.88rem; color:#a09080; margin-bottom:1rem; font-style:italic;">I seguenti premi sono assegnati esclusivamente dallo staff ai giocatori che si distinguono per qualità del roleplay, comportamento esemplare e contributo alla narrativa del server. Non è possibile richiederli né ottenerli tramite gameplay ordinario.</p>
+      <div class="premio-card">
+        <div class="premio-card-header"><span class="premio-card-icon">🏍️</span><span class="premio-card-title">Duel Runner</span></div>
+        <div class="premio-card-body">Il premiato potrà scegliere tra due modalità di acquisizione. La prima prevede la ricezione immediata di una Duel Runner <span class="highlight">già completa</span>, con aspetto e componenti meccaniche definiti dallo staff. La seconda permette al giocatore di <span class="highlight">costruirla con il proprio personaggio</span>: potrà decidere liberamente aspetto e componenti, ma dovrà interpretare l'intero processo di costruzione in-game. Si tratta di un percorso narrativo lento e graduale, che richiede il reperimento dei materiali, la ricerca di figure competenti e l'investimento di tempo e risorse. Ogni Duel Runner deve essere composta da tutti i componenti obbligatori previsti dal regolamento per essere considerata funzionante.</div>
+      </div>
+      <div class="premio-card">
+        <div class="premio-card-header"><span class="premio-card-icon">⚡</span><span class="premio-card-title">Duellante Psichico</span></div>
+        <div class="premio-card-body">Il personaggio ottiene la capacità di <span class="highlight">rendere reali i mostri evocati durante un duello</span>. I mostri materializzati possono arrecare danni concreti all'ambiente circostante e infliggere ferite fisiche reali agli avversari e ai presenti. Questa abilità comporta una responsabilità narrativa molto alta: il suo utilizzo in contesti inappropriati o in modo indiscriminato potrà avere gravi conseguenze in-game, a discrezione dello staff.</div>
+      </div>
+      <div class="premio-card">
+        <div class="premio-card-header"><span class="premio-card-icon">🌀</span><span class="premio-card-title">Accesso al Regno degli Spiriti</span></div>
+        <div class="premio-card-body">Il personaggio ottiene la capacità di <span class="highlight">separare il proprio spirito dal corpo</span> e accedere al Regno degli Spiriti. In questo stato, il giocatore potrà portare con sé l'anima delle proprie carte e interagire direttamente con i mostri e le entità che popolano tale dimensione. Le azioni compiute nel Regno degli Spiriti possono avere ripercussioni anche nel mondo fisico, a seconda del contesto narrativo e della valutazione dello staff.</div>
+      </div>
+      <div class="premio-card premio-mystery">
+        <div class="premio-card-header"><span class="premio-card-icon">🃏</span><span class="premio-card-title">Carte Speciali</span></div>
+        <div class="premio-card-body">
+          Le Carte Speciali sono ottenibili <span class="highlight">esclusivamente come premio dello staff</span>. Quando un giocatore viene ritenuto meritevole, lo staff progetterà e condurrà un <span class="highlight">evento narrativo dedicato</span> attraverso il quale il personaggio potrà entrare in possesso di una di queste carte. I risvolti legati al loro possesso o utilizzo — siano essi positivi o negativi — si manifesteranno nel corso della narrativa in modi che solo il tempo e il gioco sapranno rivelare.<br><br>
+          Come beneficio esclusivo legato a questo premio, il giocatore avrà la possibilità di <span class="highlight">ricostruire il proprio mazzo da zero</span>, senza alcuna penalità e senza dover seguire il normale processo di acquisto in-game, al fine di poter costruire un deck adatto alla carta ottenuta e sfruttarne appieno il potenziale narrativo e competitivo. Il nuovo mazzo dovrà comunque essere sottoposto all'approvazione dello staff tramite apposito ticket prima di essere utilizzato.
+          <br><em style="color:#9a70c8; display:block; margin-top:0.5rem;">Alcune storie iniziano da una carta...</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IX -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-icon">🛡️</span>
+      <span class="section-title">IX — Staff e Gestione</span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="rule"><div class="rule-num">40</div><div class="rule-text"><span class="rule-label">Controversie tramite ticket</span>Qualsiasi disputa tra giocatori deve essere gestita esclusivamente tramite ticket allo staff, evitando discussioni pubbliche nei canali di gioco.</div></div>
+      <div class="rule"><div class="rule-num">41</div><div class="rule-text"><span class="rule-label">Decisioni dello staff</span>Le decisioni dello staff sono definitive. Il disaccordo va espresso in modo civile e privato, mai pubblicamente.</div></div>
+      <div class="rule"><div class="rule-num">42</div><div class="rule-text"><span class="rule-label">Aggiornamento delle regole</span>Lo staff si riserva il diritto di modificare le regole con adeguato preavviso, comunicandolo ufficialmente a tutti i giocatori.</div></div>
+    </div>
+  </div>
+
+  <!-- X -->
+  <div class="section">
+    <div class="section-header" onclick="toggle(this)">
+      <span class="section-icon">⚠️</span>
+      <span class="section-title">X — Sanzioni</span>
+      <span class="section-chevron open">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="rule"><div class="rule-num">43</div><div class="rule-text"><span class="rule-label">Infrazione delle regole</span>La violazione di qualsiasi regola in malafede comporterà pesanti ripercussioni in-game e una sanzione off-game sotto forma di <span class="highlight">warn</span>.</div></div>
+      <div class="rule">
+        <div class="rule-num">44</div>
+        <div class="rule-text">
+          <span class="rule-label">Sistema dei warn</span>
+          <div class="warn-steps">
+            <div class="warn-step"><div class="warn-step-num">3</div><div class="warn-step-label">WARN</div><div class="warn-step-desc">Sospensione a tempo indeterminato del gioco</div></div>
+            <div class="warn-step"><div class="warn-step-num">+3</div><div class="warn-step-label">WARN (dopo ripresa)</div><div class="warn-step-desc">Ban a tempo indeterminato dal server</div></div>
+            <div class="warn-step"><div class="warn-step-num">3</div><div class="warn-step-label">MESI</div><div class="warn-step-desc">Ogni warn decade automaticamente dopo tre mesi</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">✦ &nbsp; Che il destino delle tue carte ti sia favorevole &nbsp; ✦</div>
+</div>
+
+<script>
+function toggle(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.section-chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+</script>
